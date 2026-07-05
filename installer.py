@@ -6,6 +6,8 @@ from pathlib import Path
 import threading
 import uuid
 
+print("installing dependencies...")
+
 os.system("pip install customtkinter >nul 2>nul")
 os.system("pip install uuid >nul 2>nul")
 
