@@ -7,6 +7,7 @@ import threading
 import uuid
 
 os.system("pip install customtkinter >nul 2>nul")
+os.system("pip install uuid >nul 2>nul")
 
 # === Paths ===
 TEMP_DIR = Path(os.getenv("TEMP")) / f"mcclone-{uuid.uuid4()}"
