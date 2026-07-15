@@ -9,6 +9,27 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import javax.imageio.ImageIO;
 
+class MenuPanel extends JPanel {
+    public MenuPanel(Runnable onPlay) {
+        setLayout(null);
+        setBackground(new Color(30, 30, 30));
+
+        setPreferredSize(new Dimension(800, 600)); // FIX
+
+        JButton playButton = new JButton("Play");
+        playButton.setBounds(350, 250, 100, 40);
+        playButton.addActionListener(e -> onPlay.run());
+        add(playButton);
+
+        JButton quitButton = new JButton("Quit");
+        quitButton.setBounds(350, 300, 100, 40);
+        quitButton.addActionListener(e -> System.exit(0));
+        add(quitButton);
+    }
+}
+
+
+
 public class Main extends JPanel implements KeyListener, MouseMotionListener {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
@@ -299,14 +320,27 @@ public class Main extends JPanel implements KeyListener, MouseMotionListener {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Minecraft Clone");
-        Main gamePanel = new Main();
+
+        // Create menu
+        MenuPanel menu = new MenuPanel(() -> {
+            frame.getContentPane().removeAll();
+            Main gamePanel = new Main();
+            frame.add(gamePanel);
+            frame.revalidate();
+            frame.repaint();
+            gamePanel.requestFocusInWindow();
+        });
+
+        frame.add(menu);
+
         Image icon = loadEmbeddedIcon();
         if (icon != null) frame.setIconImage(icon);
-        frame.add(gamePanel);
+
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
     }
+
 }
