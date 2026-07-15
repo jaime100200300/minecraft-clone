@@ -51,6 +51,8 @@ if "%1"=="upload" (
 
     echo Done!
 
+    exit /b
+
 )
 
 :: === Build mode ===
