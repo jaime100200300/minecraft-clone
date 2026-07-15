@@ -34,25 +34,28 @@ if "%1"=="run" (
     exit /b
 )
 
+
+
+setlocal
+
+REM === USAGE ===
+REM builder upload v1.0.0
+
 if "%1"=="upload" (
-    setlocal
+    if "%2"=="" (
+        echo ERROR: No version number provided.
+        echo Usage: builder upload v1.0.0
+        exit /b 1
+    )
 
-    REM === CONFIG ===
-    set VERSION=v1.0.0
-    set FILE1=out\minecraft-clone.exe
-    set FILE2=out\installer.exe
+    set VERSION=%2
 
-    echo Removing old assets...
-    gh release delete-asset %VERSION% minecraft-clone.exe
-    gh release delete-asset %VERSION% installer.exe
+    echo Uploading all files in out\ to release %VERSION%...
 
-    echo Uploading new assets...
-    gh release upload %VERSION% %FILE1% %FILE2% --clobber
+    gh release upload v1.0.0 out\* --clobber
 
     echo Done!
-
-    exit /b
-
+    exit /b 0
 )
 
 :: === Build mode ===
