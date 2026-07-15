@@ -34,6 +34,25 @@ if "%1"=="run" (
     exit /b
 )
 
+if "%1"=="upload" (
+    setlocal
+
+    REM === CONFIG ===
+    set VERSION=v1.0.0
+    set FILE1=out\minecraft-clone.exe
+    set FILE2=out\installer.exe
+
+    echo Removing old assets...
+    gh release delete-asset %VERSION% minecraft-clone.exe
+    gh release delete-asset %VERSION% installer.exe
+
+    echo Uploading new assets...
+    gh release upload %VERSION% %FILE1% %FILE2% --clobber
+
+    echo Done!
+
+)
+
 :: === Build mode ===
 if "%1"=="build" (
 
@@ -55,13 +74,17 @@ if "%1"=="build" (
     python -u helpers\make_icon_java.py
 
     echo === Compiling Java ===
-    javac -d build src\*.java
+    javac -d build src\game\*.java
 
     echo === Creating JAR ===
     jar cfe build\minecraft.jar Main -C build .
 
     echo === Building EXE with Launch4j ===
     java -jar "C:\Program Files (x86)\Launch4j\launch4j.jar" helpers\config.xml
+
+    echo === Building installer ===
+    g++ src\installer\installer.cpp -o out\installer.exe -lole32 -lshell32 -lshlwapi
+
 
     echo === Done! ===
 ) else (

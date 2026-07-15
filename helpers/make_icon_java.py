@@ -4,7 +4,7 @@ import os
 input_path = os.path.join("helpers", "icon.png")
 
 # Output Java file
-output_path = os.path.join("src", "IconData.java")
+output_path = os.path.join("src", "game", "IconData.java")
 
 with open(input_path, "rb") as f:
     data = f.read()
