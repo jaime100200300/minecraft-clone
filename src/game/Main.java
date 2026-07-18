@@ -47,6 +47,8 @@ public class Main extends JPanel implements KeyListener, MouseMotionListener {
 
     private double vy = 0.0;
     private boolean onGround = false;
+    // time for day-night cycle (radians)
+    private double time = 0.0;
     private final double gravity = 0.01;
     private final double jumpStrength = 0.25;
     private final double playerHeight = 1.7;
@@ -116,6 +118,10 @@ public class Main extends JPanel implements KeyListener, MouseMotionListener {
             vy = jumpStrength;
             onGround = false;
         }
+
+        // advance time (slow)
+        time += 0.002;
+        if (time > Math.PI * 2) time -= Math.PI * 2;
     }
 
     private int getTerrainHeight(int x, int z) {
@@ -160,9 +166,19 @@ public class Main extends JPanel implements KeyListener, MouseMotionListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 
-        g2d.setColor(new Color(135, 206, 235));
+        // day-night cycle: time ranges 0..2PI, use sin to get [0..1]
+        double dayFactor = 0.5 * (Math.sin(time) + 1.0); // 0 = night, 1 = day
+        Color daySky = new Color(135, 206, 235);
+        Color nightSky = new Color(20, 24, 82);
+        Color sky = lerpColor(nightSky, daySky, dayFactor);
+        g2d.setColor(sky);
         g2d.fillRect(0, 0, WIDTH, HEIGHT / 2);
-        g2d.setColor(new Color(70, 70, 70));
+
+        // ground tint darker at night
+        Color dayGround = new Color(70, 70, 70);
+        Color nightGround = new Color(20, 20, 30);
+        Color ground = lerpColor(nightGround, dayGround, dayFactor);
+        g2d.setColor(ground);
         g2d.fillRect(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
 
         double cosYaw = Math.cos(-yaw), sinYaw = Math.sin(-yaw);
@@ -293,6 +309,14 @@ public class Main extends JPanel implements KeyListener, MouseMotionListener {
                 Math.min(255, (int)(base.getGreen() * factor)),
                 Math.min(255, (int)(base.getBlue() * factor))
         );
+    }
+
+    private Color lerpColor(Color a, Color b, double t) {
+        t = Math.max(0.0, Math.min(1.0, t));
+        int r = (int) Math.round(a.getRed() + (b.getRed() - a.getRed()) * t);
+        int g = (int) Math.round(a.getGreen() + (b.getGreen() - a.getGreen()) * t);
+        int bl = (int) Math.round(a.getBlue() + (b.getBlue() - a.getBlue()) * t);
+        return new Color(Math.min(255, Math.max(0, r)), Math.min(255, Math.max(0, g)), Math.min(255, Math.max(0, bl)));
     }
 
     public void keyPressed(KeyEvent e) { if (e.getKeyCode() < 256) keys[e.getKeyCode()] = true; }

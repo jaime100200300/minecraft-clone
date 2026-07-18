@@ -58,6 +58,13 @@ if "%1"=="upload" (
     exit /b 0
 )
 
+if "%1"=="release" (
+    gh release create %2 out/* ^
+      --title %3 ^
+      --notes %4
+
+)
+
 :: === Build mode ===
 if "%1"=="build" (
 
