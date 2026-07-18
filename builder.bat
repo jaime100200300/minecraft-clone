@@ -63,6 +63,8 @@ if "%1"=="release" (
       --title %3 ^
       --notes %4
 
+    builder upload %2
+
 )
 
 :: === Build mode ===
