@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\jaime\OneDrive\Desktop\Jaime Programs\Kotlin and Java\minecraft-clone\build\minecraft.jar</jar>
-  <outfile>C:\Users\jaime\OneDrive\Desktop\Jaime Programs\Kotlin and Java\minecraft-clone\out\minecraft-clone.exe</outfile>
+  <jar>build\minecraft.jar</jar>
+  <outfile>out\minecraft-clone.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
