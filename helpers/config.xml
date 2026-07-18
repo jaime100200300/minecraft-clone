@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>C:\Users\jaime\OneDrive\Desktop\Jaime Programs\Kotlin and Java\minecraft-clone\helpers\icon.ico</icon>
+  <icon>helpers\icon.ico</icon>
   <jre>
     <path>%JAVA_HOME%;%PATH%</path>
     <requiresJdk>false</requiresJdk>
