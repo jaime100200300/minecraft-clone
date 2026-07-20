@@ -31,6 +31,8 @@ if "%1"=="run" (
     
     echo === Running minecraft-clone ===
     out\minecraft-clone
+
+    builder clean
     exit /b
 )
 
@@ -94,7 +96,9 @@ if "%1"=="build" (
     jar cfe build\minecraft.jar Main -C build .
 
     echo === Building EXE with Launch4j ===
-    java -jar "C:\Program Files (x86)\Launch4j\launch4j.jar" helpers\config.xml
+    cd helpers
+    java -jar "C:\Program Files (x86)\Launch4j\launch4j.jar" "config.xml"
+    cd ..
 
     echo === Building installer ===
     g++ src\installer\installer.cpp -o out\installer.exe -lole32 -lshell32 -lshlwapi
