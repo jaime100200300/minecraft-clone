@@ -112,4 +112,6 @@ if "%1"=="build" (
     echo If "-o" is specified like "builder clean -o", it removes the out folder as well.
     echo.
     echo build  Builds the project.
+    echo releaseReleases a new version to github.
+    echo upload Uploads files to a release version.
 )
