@@ -33,7 +33,6 @@ if "%1"=="run" (
     out\minecraft-clone
 
     builder clean
-    exit /b
 )
 
 
